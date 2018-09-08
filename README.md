@@ -160,3 +160,35 @@ sort(X.begin(), X.end()); // Sort array in ascending order
 sort(all(X)); // Sort array in ascending order, use our #define
 sort(X.rbegin(), X.rend()); // Sort array in descending order using with reverse iterators
 ```
+
+### Compiling STL Programs
+
+One of STL’s habits is **unreadable error messages**.
+```c++
+vector< int >::iterator it = v.begin(); // INcorrect
+vector< int >::const_iterator it = v.begin(); // correct
+```
+In spite of this, let me tell about very important feature of GNU C++ called ‘typeof’. This operator is replaced to the type of an expression during the compilation.
+```c++
+typeof(a+b) x = (a+b);
+```
+
+Cool example:
+
+```c++
+// Traverse (any) container
+#define tr(container, it) \ 
+for(typeof(container.begin()) it = container.begin(); it != container.end(); it++)
+```
+
+By using these macros we can traverse every kind of container, not only vector.
+
+```c++
+void f(const vector< int >& v) {
+    int r = 0;
+    tr(v, it) {
+        r += (it)(*it);
+    }
+    return r;
+}
+```
