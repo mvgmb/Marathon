@@ -181,7 +181,7 @@ Cool example:
 for(typeof(container.begin()) it = container.begin(); it != container.end(); it++)
 ```
 
-By using these macros we can traverse every kind of container, not only vector.
+By using these macros **we can traverse every kind of container**, not only vector.
 
 ```c++
 void f(const vector< int >& v) {
@@ -191,4 +191,28 @@ void f(const vector< int >& v) {
     }
     return r;
 }
+```
+
+Traversing macros is not really necessary for vectors, but **it’s very convenient for more complex data types**, where indexing is not supported and iterators are the only way to access data. We will speak about this later in this article.
+
+### Data manipulation in vector
+
+One can insert an element to vector by using the **insert() function**:
+
+```c++ 
+vector< int > v;
+// ...
+v.insert(1, 42); // Insert value 42 after the first
+
+vector< int > v2;
+v.insert(1, all(v2));
+// Shift all elements from second to last to the appropriate number of elements.
+// Then copy the contents of v2 into v.
+```
+
+Vector also has a member **function erase**, which has two forms. Guess what they are:
+
+```c++ 
+erase(iterator);
+erase(begin iterator, end iterator);
 ```
