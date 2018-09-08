@@ -234,9 +234,9 @@ Beware of (s.length()-1) on empty string because s.length() is unsigned and **un
 ### Set
 
 Consider we need a container with the following features:
--add an element, but do not allow duples [duplicates?]
--remove elements
--get count of elements (distinct elements)
--check whether elements are present in set
+- add an element, but do not allow duples [duplicates?]
+- remove elements
+- get count of elements (distinct elements)
+- check whether elements are present in set
 
 This is quite a frequently used task. STL provides the special container for it – set. Set can add, remove and check the presence of particular element in O(log N), where N is the count of objects in the set. While adding elements to set, the duples [duplicates?] are discarded. A count of the elements in the set, N, is returned in O(1). We will speak of the algorithmic implementation of set and map later — for now, let’s investigate its interface:
