@@ -48,31 +48,31 @@ For example, if you want to sort the array of integer points so that they form a
 STL algorithms always use two iterators, called “begin” and “end.” 
 The end iterator is pointing _not to the last object_, however, but to the **first invalid object**, or the object directly following the last one. It’s often very convenient.
 
-Each STL container has member functions begin() and end() that return the begin and end iterators for that container.
+Each STL container has member functions **begin()** and **end()** that return the begin and end iterators for that container.
 
-Based on these principles, c.begin() == c.end() if and only if c is empty, and c.end() – c.begin() will always be equal to c.size(). *(The last sentence is valid in cases when iterators can be subtracted, i.e. begin() and end() return random access iterators, which is not true for all kinds of containers. See the prior example of the double-linked list.)*
+Based on these principles, **c.begin() == c.end() if and only if c is empty**, and **c.end() – c.begin() will always be equal to c.size()**. (*The last sentence is valid in cases when iterators can be subtracted, i.e. begin() and end() return random access iterators, which is not true for all kinds of containers. See the prior example of the double-linked list.*)
 
 The STL-compliant reverse function should be written as follows:
 ```c++
 template< typename T > void reverse_array_stl_compliant(T *begin, T *end) {
-// We should at first decrement 'end'
-// But only for non-empty range
-if(begin != end) {
-    end--;
+    // We should at first decrement 'end'
+    // But only for non-empty range
     if(begin != end) {
-        while(true) {
-        swap(*begin, *end);
-        begin++;
-        if(begin == end) {
-            break;
-        }   
         end--;
-        if(begin == end) {
-            break;
-        }
+        if(begin != end) {
+            while(true) {
+            **swap(*begin, *end);**
+            begin++;
+            if(begin == end) {
+                break;
+            }   
+            end--;
+            if(begin == end) {
+                break;
+            }
+            }
         }
     }
-}
 }
 ```
 Note that this function does the same thing as the **standard function std::reverse(T begin, T end)** that can be found in algorithms module (#include ).
@@ -94,37 +94,37 @@ vector< int > v;
 vector< int > v2(v.begin(), v.begin() + (v.size()/2));
 ```
 
-Here is an example of reverse() function:
+Here is an example of **reverse()** function:
 
 ```c++
 int data[10] = { 1, 3, 5, 7, 9, 11, 13, 15, 17, 19 };
 reverse(data+2, data+6); // the range { 5, 7, 9, 11 } is now { 11, 9, 7, 5 };
 ```
 
-Each container also has the rbegin()/rend() functions, which return reverse iterators. Reverse iterators are used to traverse the container in backward order. Thus this will create v2 with first half of v, ordered back-to-front.
+Each container also has the **rbegin()** and **rend()** functions, which return **reverse iterators**. Reverse iterators are used to traverse the container in backward order. Thus this will create v2 with first half of v, ordered back-to-front.
 
 ```c++
 vector< int > v;
 vector< int > v2(v.rbegin()+(v.size()/2), v.rend());
 ```
-To create an iterator object, we must specify its type. The type of iterator can be constructed by a type of container by appending “::iterator”, “::const_iterator”, “::reverse_iterator” or “::const_reverse_iterator” to it. Thus, vector can be traversed in the following way:
+To **create an iterator object**, we must specify its type. The type of iterator can be constructed by a type of container by appending “::iterator”, “::const_iterator”, “::reverse_iterator” or “::const_reverse_iterator” to it. Thus, vector can be traversed in the following way:
 
 ```c++
 vector< int > v; 
 // ... 
 // Traverse all container, from begin() to end()
 for(vector< int >::iterator it = v.begin(); it != v.end(); it++) {
-*it++; // Increment the value iterator is pointing to
+    *it++; // Increment the value iterator is pointing to
 }
 ```
 
-I recommend you use ‘!=’ instead of ‘<’, and ‘empty()’ instead of ‘size() != 0′ — for some container types, it’s just very inefficient to determine which of the iterators precedes another.
+*I recommend you use ‘!=’ instead of ‘<’, and ‘empty()’ instead of ‘size() != 0′ — for some container types, it’s just very inefficient to determine which of the iterators precedes another.*
 
 The **find()** algorithm looks for appropriate elements in an interval. 
-If the element is found, the iterator pointing to the first occurrence of the element is returned. 
+If the element is found, the iterator pointing to the *first occurrence of the element is returned*. 
 Otherwise, the return value equals the end of interval.
 
-To get the index of element found, one should subtract the beginning iterator from the result of find():
+**To get the index of element found**, one should subtract the beginning iterator from the result of find():
 
 ```c++
 int i = (find(v.begin(), v.end(), 49) - v.begin();
@@ -133,25 +133,26 @@ if(i < v.size()) {
 }
 ```
 
-The min_element and max_element algorithms return an iterator to the respective element. To get the value of min/max element, like in find(), use *min_element(…) or *max_element(…), to get index in array subtract the begin iterator of a container or range:
+The **min_element** and **max_element** algorithms return an iterator to the respective element. To get the value of min/max element, like in *find()*, use *min_element(…) or *max_element(…), to get index in array subtract the begin iterator of a container or range:
 
 ```c++
 int data[5] = { 1, 5, 2, 4, 3 };
 vector< int > X(data, data+5);
-int v1 = *max_element(X.begin(), X.end()); // Returns value of max element in VECTOR
-int i1 = *min_element(X.begin(), X.end()) – X.begin; // Returns index of min element in VECTOR
+int v1 = *max_element(X.begin(), X.end()); // Returns value of max element in **VECTOR**
+int i1 = *min_element(X.begin(), X.end()) – X.begin; // Returns index of min element in **VECTOR**
 
-int v2 = *max_element(data, data+5); // Returns value of max element in ARRAY
-int i3 = *min_element(data, data+5) – data; // Returns index of min element in ARRAY
+int v2 = *max_element(data, data+5); // Returns value of max element in **ARRAY**
+int i3 = *min_element(data, data+5) – data; // Returns index of min element in **ARRAY**
 ```
 
 Now you may see that the useful macros would be:
+
 ```c++
 #define all(c) c.begin(), c.end()
 ```
-*Don’t put the whole right-hand side of these macros into parentheses – that would be wrong!*
+*Don’t put the whole right-hand side of these macros into parentheses – **that would be wrong!***
 
-Another good algorithm is sort(). It’s very easy to use. Consider the following examples:
+Another good algorithm is **sort()**. It’s very easy to use. Consider the following examples:
 ```c++
 vector< int > X; 
 // ... 
