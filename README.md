@@ -216,3 +216,19 @@ Vector also has a member **function erase**, which has two forms. Guess what the
 erase(iterator);
 erase(begin iterator, end iterator);
 ```
+
+### String
+There is a **special container** to manipulate with strings. The string container has a *few differences* from vector< char >. Most of the differences come down to string manipulation functions and memory management policy.
+
+String has a substring function **without iterators**, just indices:
+```c++
+string s = "hello";
+string
+s1 = s.substr(0, 3), // "hel"
+s2 = s.substr(1, 3), // "ell"
+s3 = s.substr(0, s.length()-1), "hell"
+s4 = s.substr(1); // "ello"
+```
+Beware of (s.length()-1) on empty string because s.length() is unsigned and **unsigned(0) – 1 is definitely not what you are expecting!**
+
+### 
