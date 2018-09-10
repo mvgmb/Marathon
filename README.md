@@ -1,18 +1,23 @@
 # Some Reminders
 
-#### reminders
+#### Template list
 ```c++
 #include<bits/stdc++.h>
-#define all(c) c.begin(), c.end()
-// Traverse (any) container
-#define tr(container, it) \ 
-for(typeof(container.begin()) it = container.begin(); it != container.end(); it++)
-// For maps and sets
-#define present(container, element) (container.find(element) != container.end())
-// For vectors
-#define cpresent(container, element) (find(all(container),element) != container.end())
+typedef vector< int > vi;
+typedef vector< vi > vvi;
+typedef pair< int,int > ii;
+#define sz(a) int((a).size())
+#define pb push_back
+#defile all(c) (c).begin(),(c).end()
+#define tr(c,i) for(typeof((c).begin() i = (c).begin(); i != (c).end(); i++)
+#define present(c,x) ((c).find(x) != (c).end())
+#define cpresent(c,x) (find(all(c),x) != (c).end())
+
+//Another note to keep in mind: When a token from the left-hand side of #define appears in the right-hand side, it should be placed in braces to avoid many nontrivial problems.
 ```
+
 ### Vectors
+
 ```c++
     vector < int > N;
     vector < vector< int > > CorrectDefinition;
@@ -403,7 +408,7 @@ void f(const map< string, int >& M) {
 
 But the fact that **the elements of map and set are always ordered** can be practically used while solving TopCoder problems.
 
-**Another important thing is that operators ++ and — are defined on iterators in map and set.** Thus, if the value 42 presents in set, and it’s not the first and the last one, than the following code will work:
+**Another important thing is that operators ++ and -- are defined on iterators in map and set.** Thus, if the value 42 presents in set, and it’s not the first and the last one, than the following code will work:
 ```c++
 set< int > S;
 // ...
@@ -414,3 +419,80 @@ it2++;
 int a = *it1, b = *it2;
 ```
 Here ‘a’ will contain the first neighbor of 42 to the left and ‘b’ the first one to the right.
+
+### More on algorithms
+Most algorithms are declared in the #include < algorithm > standard header. 
+At first, STL provides three very simple algorithms: **min(a,b), max(a,b), swap(a,b)**.
+
+The call to **sort(begin, end)** sorts an interval in ascending order. *Notice that sort() requires random access iterators, so it will not work on all containers*.
+
+The call to **find(begin, end, element)** returns the iterator where ‘element’ first occurs, or **end if the element is not found**. 
+
+The call to **count(begin, end, element) returns the number of occurrences of an element in a container or a part of a container**. 
+
+Remember that **set and map have the member functions find() and count(), which works in O(log N)**, while **std::find() and std::count() take O(N).**
+
+Other useful algorithms are **next_permutation()** and **prev_permutation()**. 
+
+The call to next_permutation(begin, end) makes the interval [begin, end] hold the next permutation of the same elements, or **returns false if the current permutation is the last one.** Accordingly, next_permutation makes many tasks quite easy. If you want to check all permutations, just write:
+
+```c++
+vector< int > v;
+
+for(int i = 0; i < 10; i++) {
+    v.push_back(i);
+}
+
+do {
+Solve(..., v);
+} while(next_permutation(all(v));
+```
+
+**Don’t forget to ensure that the elements in a container are sorted before your first call to next_permutation(…)**. Their initial state should form the very first permutation; otherwise, some permutations will not be checked.
+
+### String Streams
+
+**You often need to do some string processing/input/output**. C++ provides two interesting objects for it: ‘**istringstream**’ and ‘**ostringstream**’. They are both declared in #**include < sstream >**.
+
+Object **istringstream** allows you to read from a string like you do from a standard input. It’s better to view source:
+
+```c++
+void f(const string& s) { 
+
+// Construct an object to parse strings
+istringstream is(s); 
+
+// Vector to store data
+vector< int > v; 
+
+// Read integer while possible and add it to the vector
+int tmp;
+while(is >> tmp) {
+    v.push_back(tmp);
+}
+}
+```
+
+The **ostringstream** object is used to do formatting output. Here is the code:
+
+```c++
+string f(const vector< int >& v) {
+// Constuct an object to do formatted output
+ostringstream os; 
+
+// Copy all elements from vector< int > to string stream as text
+tr(v, it) {
+    os << ' ' << *it;
+} 
+
+// Get string from string stream
+string s = os.str(); 
+
+// Remove first space character
+if(!s.empty()) { // Beware of empty string here
+    s = s.substr(1);
+} 
+
+return s;
+```
+
