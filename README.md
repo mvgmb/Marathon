@@ -357,3 +357,60 @@ vector< int > v2(all(s));
 **Here ‘v2′ will contain the same elements as ‘v’ but sorted in ascending order and with duplicates removed.**
 
 *Any comparable elements can be stored in set.*
+
+### Map
+There are two explanation of map. The simple explanation is the following:
+```c++
+map< string, int > M;
+M["Top"] = 1;
+M["Coder"] = 2;
+M["SRM"] = 10;
+
+int x = M["Top"] + M["Coder"];
+
+if(M.find("SRM") != M.end()) {
+    M.erase(M.find("SRM")); // or even M.erase("SRM")
+}
+```
+Very simple, isn’t it?
+
+**Actually map is very much like set, except it contains not just values but pairs <key, value>.** *Map ensures that at most one pair with specific key exists.* Another quite pleasant thing is that **map has operator [] defined**.
+
+Traversing map is easy with our ‘tr()’ macros. **Notice that iterator will be an std::pair of key and value**. So, *to get the value use it->second*. The example follows:
+```c++
+map< string, int > M;
+// …
+int r = 0;
+tr(M, it) {
+    r += it->second;
+}
+```
+**Don’t change the key of map element by iterator, because it may break the integrity of map internal data structure** (see below).
+
+**There is one important difference between map::find() and map::operator [].** While **map::find() will never change the contents of map**, **operator [] will create an element if it does not exist**. In some cases this could be very convenient, but it’s definitly a bad idea to use operator [] many times in a loop, when you do not want to add new elements. **That’s why operator [] may not be used if map is passed as a const reference parameter to some function**:
+```c++
+void f(const map< string, int >& M) {
+    if(M["the meaning"] == 42) { // Error! Cannot use [] on const map objects!
+    }
+    if(M.find("the meaning") != M.end() && M.find("the meaning")->second == 42) { // Correct
+        cout << "Don't Panic!" << endl;
+    }
+}
+```
+#### Notice on Map and Set
+
+**Internally map and set are almost always stored as red-black trees**. We do not need to worry about the internal structure, the thing to remember is that the elements of map and set are always sorted in ascending order while traversing these containers. **And that’s why it’s strongly not recommended to change the key value while traversing map or set**: If you make the modification that breaks the order, it will lead to improper functionality of container’s algorithms, at least.
+
+But the fact that **the elements of map and set are always ordered** can be practically used while solving TopCoder problems.
+
+**Another important thing is that operators ++ and — are defined on iterators in map and set.** Thus, if the value 42 presents in set, and it’s not the first and the last one, than the following code will work:
+```c++
+set< int > S;
+// ...
+set< int >::iterator it = S.find(42);
+set< int >::iterator it1 = it, it2 = it;
+it1--;
+it2++;
+int a = *it1, b = *it2;
+```
+Here ‘a’ will contain the first neighbor of 42 to the left and ‘b’ the first one to the right.
