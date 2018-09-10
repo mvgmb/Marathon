@@ -341,7 +341,7 @@ set< int > S(data, data+5);
 ```c++
 vector< int > v;
 // …
-set< int > s(all(v));
+set< int > s(all(v)); // Remember that all(v) stands for "v.begin(), v.end"
 vector< int > v2(all(s));
 ```
 **Here ‘v2′ will contain the same elements as ‘v’ but sorted in ascending order and with duplicates removed.**
