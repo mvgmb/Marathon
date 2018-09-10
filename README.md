@@ -1,12 +1,5 @@
 # Reminders
 
-#### Tempalte List
-#### Vectors
-#### String 
-#### Pairs
-#### Iterators
-#### Set
-#### Map
 #### Template list
 ```c++
 #include<bits/stdc++.h>
@@ -88,7 +81,7 @@ s4 = s.substr(1); // "ello"
 // Beware of (s.length()-1) on empty string
 ```
 
-### Pairs
+#### Pairs
 ```c++
 pair<string, pair< int,int > > P;
 string s = P.first; // extract string
