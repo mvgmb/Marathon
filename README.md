@@ -1,7 +1,17 @@
 # Some Reminders
 
-## #include<bits/stdc++.h>
-
+#### reminders
+```c++
+#include<bits/stdc++.h>
+#define all(c) c.begin(), c.end()
+// Traverse (any) container
+#define tr(container, it) \ 
+for(typeof(container.begin()) it = container.begin(); it != container.end(); it++)
+// For maps and sets
+#define present(container, element) (container.find(element) != container.end())
+// For vectors
+#define cpresent(container, element) (find(all(container),element) != container.end())
+```
 ### Vectors
 ```c++
     vector < int > N;
