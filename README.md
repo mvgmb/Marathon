@@ -17,6 +17,8 @@ typedef pair< int,int > ii;
 //right-hand side, it should be placed in braces to avoid many nontrivial problems.
 ```
 ```c++
+static int temp[5000]; // global static tmp, so we don't lose time allocation memory
+
 min(a,b);
 max(a,b);
 swap(a,b);
@@ -69,6 +71,19 @@ v.insert(1, all(v2));
 
 erase(it);
 erase(begin it, end it);
+
+map< string, int > M;
+vector< pair< string, int > > V(all(M)); // Creating vector from map
+
+vector< int > v1;
+vector< int > v2; 
+
+v1.resize(v1.size() + v2.size());
+copy(all(v2), v1.end() - v2.size());
+
+int data1[] = { 1, 2, 5, 6, 8, 9, 10 };
+vector< int > v1(data1, data1+sizeof(data1)/sizeof(data1[0]));
+
 ```
 
 #### String 
@@ -90,6 +105,7 @@ int y = P.second.second; // extract second int
 ```
 #### Iterators 
 ```c++
+//something->’ and ‘(*something).’ are both allowed
 // c == container
 c.begin();
 c.end();

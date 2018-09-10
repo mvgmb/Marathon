@@ -16,15 +16,16 @@ typedef pair< int,int > ii;
 #define cpresent(c,x) (find(all(c),x) != (c).end())
 
 int main() {
-    vector< int > v (10);
+    vector< int > v (1, 2);
     int data[5] = { 2, 5, 2, 4, 190 };
-
+    v.pb(3);
     cout << "vector ";
     int a = 100;
-    tr(v, i) {
-        *i = a;
-        a++;
-    }
+    vector< int >::iterator it = v.begin();
+    cout << *it << endl;
+    it++;
+    cout << *max_element(all(v)) << endl;
+     
     cout << *max_element(data, data+5) << endl;
     // Traverse the vector using const_iterator
     for(vector< int >::iterator it = v.begin(); it != v.end(); it++) {

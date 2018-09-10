@@ -293,7 +293,7 @@ tr(SS, it) {
     total += it->second.first;
 }
 ```
-Notice the ‘*it->second.first*’ syntax. Since ‘*it*’ is an iterator, we need to take an object from ‘*it*’ before operating. So, the correct syntax would be ‘*(*it).second.first*’. However, it’s easier to write ‘**something->’ than ‘(*something)**’. The full explanation will be quite long –just remember that, for iterators, **both syntaxes are allowed**.    
+Notice the ‘*it->second.first*’ syntax. Since ‘*it*’ is an iterator, we need to take an object from ‘*it*’ before operating. So, the correct syntax would be ‘*(*it).second.first*’. However, it’s easier to write ‘**something->//’ than ‘(*something).//**’. The full explanation will be quite long –just remember that, for iterators, **both syntaxes are allowed**.    
 
 
 **To determine whether some element is present in set use ‘find()’ member function.** Don’t be confused, though: there are several ‘find()’ ’s in STL. **There is a global algorithm ‘find()’, which takes two iterators, element, and works for O(N)**. It is possible to use it for searching for element in set, **but why use an O(N) algorithm while there exists an O(log N) one?** *While searching in set and map (and also in multiset/multimap, hash_map/hash_set, etc.)* **do not use global find** – **instead, use member function ‘set::find()’**. *As ‘ordinal’ find, set::find will return an iterator, either to the element found, or to ‘end()’*. So, the element presence check looks like this:
@@ -507,7 +507,7 @@ return s;
 
 As you already know, map actually contains pairs of element. So you can write it in like this:
 ```c++
- map< string, int > M;
+map< string, int > M;
 // ...
 vector< pair< string, int > > V(all(M)); // remember all(c) stands for
 (c).begin(),(c).end()
@@ -592,8 +592,8 @@ Actually, I would never use a construction like ' vector< int > tmp'. I don't th
 ```c++
 set< int > s1, s2;
 for(int i = 0; i < 500; i++) {
-s1.insert(i*(i+1) % 1000);
-s2.insert(iii % 1000);
+    s1.insert(i*(i+1) % 1000);
+    s2.insert(iii % 1000);
 } 
 
 static int temp[5000]; // greater than we need 
