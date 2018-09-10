@@ -8,12 +8,13 @@ typedef vector< vi > vvi;
 typedef pair< int,int > ii;
 #define sz(a) int((a).size())
 #define pb push_back
-#defile all(c) (c).begin(),(c).end()
-#define tr(c,i) for(typeof((c).begin() i = (c).begin(); i != (c).end(); i++)
+#define all(c) (c).begin(),(c).end()
+#define tr(c,i) for(typeof((c).begin()) i = (c).begin(); i != (c).end(); i++)
 #define present(c,x) ((c).find(x) != (c).end())
 #define cpresent(c,x) (find(all(c),x) != (c).end())
 
-//Another note to keep in mind: When a token from the left-hand side of #define appears in the right-hand side, it should be placed in braces to avoid many nontrivial problems.
+//Another note to keep in mind: When a token from the left-hand side of #define appears in the
+//right-hand side, it should be placed in braces to avoid many nontrivial problems.
 ```
 
 ### Vectors
@@ -154,10 +155,10 @@ The **min_element** and **max_element** algorithms return an iterator to the res
 int data[5] = { 1, 5, 2, 4, 3 };
 vector< int > X(data, data+5);
 int v1 = *max_element(X.begin(), X.end()); // Returns value of max element in **VECTOR**
-int i1 = *min_element(X.begin(), X.end()) – X.begin; // Returns index of min element in **VECTOR**
+int i1 = *min_element(X.begin(), X.end()) – X.begin; // Returns value of min element in **VECTOR**
 
 int v2 = *max_element(data, data+5); // Returns value of max element in **ARRAY**
-int i3 = *min_element(data, data+5) – data; // Returns index of min element in **ARRAY**
+int i3 = *min_element(data, data+5) – data; // Returns value of min element in **ARRAY**
 ```
 
 Now you may see that the useful macros would be:
@@ -238,7 +239,6 @@ There is a **special container** to manipulate with strings. The string containe
 String has a substring function **without iterators**, just indices:
 ```c++
 string s = "hello";
-string
 s1 = s.substr(0, 3), // "hel"
 s2 = s.substr(1, 3), // "ell"
 s3 = s.substr(0, s.length()-1), "hell"
@@ -307,18 +307,23 @@ else {
     // 42 not presents in set
 }
 ```
+
 **Another algorithm that works for O(log N) while called as member function is count.** Some people think that:
+
 ```c++
 if(s.count(42) != 0) {
     // …
 }
 ```
+
 Or even
+
 ```c++
 if(s.count(42)) {
     // …
 }
 ```
+
 *is easier to write*. Personally, I don’t think so. **Using count() in set/map is nonsense: the element either presents or not.** As for me, I prefer to use the following two macros:
 ```c++
 #define present(container, element) (container.find(element) != container.end())
@@ -382,6 +387,7 @@ Very simple, isn’t it?
 **Actually map is very much like set, except it contains not just values but pairs <key, value>.** *Map ensures that at most one pair with specific key exists.* Another quite pleasant thing is that **map has operator [] defined**.
 
 Traversing map is easy with our ‘tr()’ macros. **Notice that iterator will be an std::pair of key and value**. So, *to get the value use it->second*. The example follows:
+
 ```c++
 map< string, int > M;
 // …
@@ -390,6 +396,7 @@ tr(M, it) {
     r += it->second;
 }
 ```
+
 **Don’t change the key of map element by iterator, because it may break the integrity of map internal data structure** (see below).
 
 **There is one important difference between map::find() and map::operator [].** While **map::find() will never change the contents of map**, **operator [] will create an element if it does not exist**. In some cases this could be very convenient, but it’s definitly a bad idea to use operator [] many times in a loop, when you do not want to add new elements. **That’s why operator [] may not be used if map is passed as a const reference parameter to some function**:
@@ -496,3 +503,107 @@ if(!s.empty()) { // Beware of empty string here
 return s;
 ```
 
+### Creating Vector from Map
+
+As you already know, map actually contains pairs of element. So you can write it in like this:
+```c++
+ map< string, int > M;
+// ...
+vector< pair< string, int > > V(all(M)); // remember all(c) stands for
+(c).begin(),(c).end()
+```
+Now vector will contain the same elements as map. Of course, vector will be sorted, as is map. **This feature may be useful if you are not planning to change elements in map any more but want to use indices of elements in a way that is impossible in map**
+
+### Copying data between containers
+
+**Let’s take a look at the copy(…) algorithm.**
+```c++ 
+copy(from_begin, from_end, to_begin);
+```
+
+**This algorithm copies elements from the first interval to the second one**. The second interval 
+should have enough space available. See the following code:
+
+```c++
+vector< int > v1;
+vector< int > v2; 
+
+// ... 
+
+// Now copy v2 to the end of v1
+v1.resize(v1.size() + v2.size());
+// Ensure v1 have enough space
+copy(all(v2), v1.end() - v2.size());
+// Copy v2 elements right after v1 ones
+```
+
+**Another good feature to use in conjunction with copy is inserters**. I will not describe it here due to limited space but look at the code:
+
+```c++
+vector< int > v;
+// ...
+set< int > s;
+// add some elements to set
+copy(all(v), inserter(s));
+
+The last line means:
+
+tr(v, it) {
+    // remember traversing macros from Part I
+    s.insert(*it);
+}
+```
+
+To insert elemements to vector with **push_back use back_inserter, or front_inserter** is available for deque container. And in some cases it is **useful to remember that the first two arguments for ‘copy’ may be** not only **begin/end**, but also **rbegin/rend, which copy data in reverse order.**
+
+### Merging lists
+Another common task is to operate with sorted lists of elements. Imagine you have two lists of elements — A and B, both ordered. You want to get a new list from these two. There are four common operations here:
+
+- ‘union’ the lists, R = A+B
+- intersect the lists, R = A*B
+- set difference, R = A*(~B) or R = A-B
+- set symmetric difference, R = A XOR B
+
+STL provides four algorithms for these tasks: **set_union(…), set_intersection(…), set_difference(…) and set_symmetric_difference(…)**. They all have the same calling conventions, so let’s look at set_intersection.
+```c++
+end_result = set_intersection(begin1, end1, begin2, end2, begin_result);
+```
+
+**Here [begin1,end1] and [begin2,end2] are the input lists**. **The 'begin_result' is the iterator from where the result will be written**. But the size of the result is unknown, so this function **returns the end iterator** of output (which determines how many elements are in the result). See the example for usage details:
+
+```c++
+int data1[] = { 1, 2, 5, 6, 8, 9, 10 };
+int data2[] = { 0, 2, 3, 4, 7, 8, 10 };
+
+vector< int > v1(data1, data1+sizeof(data1)/sizeof(data1[0]));
+vector< int > v2(data2, data2+sizeof(data2)/sizeof(data2[0]));
+
+vector< int > tmp(max(v1.size(), v2.size());
+
+vector< int > res = vector< int > (tmp.begin(), set_intersection(all(v1), all(v2), tmp.begin());
+```
+
+Look at the last line. We construct a new vector named 'res'. It is constructed via interval constructor, and the beginning of the interval will be the beginning of tmp. The end of the interval is the result of the set_intersection algorithm. This algorithm will intersect v1 and v2 and write the result to the output iterator, starting from 'tmp.begin()'. Its return value will actually be the end of the interval that forms the resulting dataset.
+
+One comment that might help you understand it better: If you would like to just get the number of elements in set intersection, use int cnt = set_intersection(all(v1), all(v2), tmp.begin()) – tmp.begin();
+
+Actually, I would never use a construction like ' vector< int > tmp'. I don't think it's a good idea to allocate memory for each set_*** algorithm invoking. Instead, I define the global or static variable of appropriate type and enough size. See below:
+
+```c++
+set< int > s1, s2;
+for(int i = 0; i < 500; i++) {
+s1.insert(i*(i+1) % 1000);
+s2.insert(iii % 1000);
+} 
+
+static int temp[5000]; // greater than we need 
+
+vector< int > res = vi(temp, set_symmetric_difference(all(s1), all(s2), temp));
+int cnt = set_symmetric_difference(all(s1), all(s2), temp) – temp;
+```
+
+Here 'res' will contain the symmetric difference of the input datasets.
+
+Remember, input datasets need to be sorted to use these algorithms. So, another important thing to remember is that, because sets are always ordered, we can use set-s (and even map-s, if you are not scared by pairs) as parameters for these algorithms.
+
+**These algorithms work in single pass, in O(N1+N2), when N1 and N2 are sizes of input datasets.**
