@@ -457,7 +457,7 @@ Solve(..., v);
 
 **Don’t forget to ensure that the elements in a container are sorted before your first call to next_permutation(…)**. Their initial state should form the very first permutation; otherwise, some permutations will not be checked.
 
-### String Streams
+### String Streams  
 
 **You often need to do some string processing/input/output**. C++ provides two interesting objects for it: ‘**istringstream**’ and ‘**ostringstream**’. They are both declared in #**include < sstream >**.
 
@@ -598,7 +598,7 @@ for(int i = 0; i < 500; i++) {
 
 static int temp[5000]; // greater than we need 
 
-vector< int > res = vi(temp, set_symmetric_difference(all(s1), all(s2), temp));
+vector< int > res(temp, set_symmetric_difference(all(s1), all(s2), temp));
 int cnt = set_symmetric_difference(all(s1), all(s2), temp) – temp;
 ```
 

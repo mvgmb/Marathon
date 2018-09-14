@@ -1,0 +1,73 @@
+
+    static int temp[5000];
+
+
+    set< int > s1, s2;
+    for(int i = 0; i < 20; i++) {
+        s1.insert(i);
+        s2.insert(i*5);
+        cout << i << " ";
+    }
+    cout << endl;
+    tr (s2, t) {
+        cout << *t << " ";
+    }
+    cout << endl;
+    vector< int > ress(temp, set_intersection(all(s1), all(s2), temp));
+    int cnt = set_intersection(all(s1), all(s2), temp) - temp;
+    cout << ">>>" << cnt <<"<<<\n";
+    tr (ress, i) {
+        cout << *i << " ";
+    }
+
+    vector< int > v (1, 2);
+    int data[5] = { 2, 5, 2, 4, 190 };
+    v.pb(3);
+    cout << "vector ";
+    int a = 100;
+    vector< int >::iterator it = v.begin();
+    cout << *it << endl;
+    it++;
+    cout << *max_element(all(v)) << endl;
+
+    int data1[] = { 1, 2, 5, 6, 8, 9, 10 };
+    int data2[] = { 0, 2, 3, 4, 7, 8, 10 };
+
+    vector< int > v1(data1, data1+sizeof(data1)/sizeof(data1[0]));
+    vector< int > v2(data2, data2+sizeof(data2)/sizeof(data2[0]));
+
+    vector< int > tmp(max(v1.size(), v2.size()));
+
+    vector< int > res = vector< int > (tmp.begin(), set_intersection(all(v1), all(v2), tmp.begin()));
+    vector<int>::iterator ass = set_intersection(all(v1), all(v2), tmp.begin());
+    cout << *ass << endl;
+    ass++;
+    cout << *ass << endl;
+    
+    tr(res, i){
+        cout << "res " << *i << endl;
+    }
+    cout << *max_element(data, data+5) << endl;
+    // Traverse the vector using const_iterator
+    for(vector< int >::iterator it = v.begin(); it != v.end(); it++) {
+        cout << *it;
+    }
+    cout << endl;
+
+    set<int> s;
+    s.insert(1);
+    s.insert(1); // duplicate
+    s.insert(2);
+    s.insert(3);
+    s.erase(2);
+    cout << "set ";
+    tr(s, i) {
+        cout << *i;    
+    }
+    cout << endl;
+    if (s.find(3) != s.end()) { // returns 3 iterator (true) or end iterator (false)
+        cout << "found 3!";
+    }
+    cout << endl;
+
+    return 0;

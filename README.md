@@ -13,6 +13,10 @@ typedef pair< int,int > ii;
 #define present(c,x) ((c).find(x) != (c).end())
 #define cpresent(c,x) (find(all(c),x) != (c).end())
 
+std::cout << setprecision(3) << 2.71828; // prints 2.71
+std::cout << setbase(16) << 32; // prints 20
+
+
 //Another note to keep in mind: When a token from the left-hand side of #define appears in the
 //right-hand side, it should be placed in braces to avoid many nontrivial problems.
 ```
@@ -52,6 +56,24 @@ string s = os.str();
 if(!s.empty()) { // Beware of empty string here
     s = s.substr(1);
 } 
+
+while (getline(std::cin, input1))
+{
+    if (input1.empty())
+        break;
+    username =input1;
+    std::cout << input1 << std::endl << "Enter Input : ";
+}
+```
+```c++
+// set_union(…), set_intersection(…), set_difference(…) and set_symmetric_difference(…)
+// end_result_iterator = set_intersection(begin1, end1, begin2, end2, begin_result);
+set< int > s1, s2;
+// ...
+static int temp[5000];
+vector< int > result(temp, set_symmetric_difference(all(s1), all(s2), temp));
+int count = set_symmetric_difference(all(s1), all(s2), temp) - temp;
+// 
 ```
 
 
@@ -124,6 +146,9 @@ vector< int > X(data, data+5);
 int v1 = *max_element(X.begin(), X.end()); // Returns value of max element in VECTOR
 
 int i3 = *min_element(data, data+5) – data; // Returns value of min element in ARRAY
+
+std::set<int>::iterator it = s.begin();
+std::advance(it, s.size() / 2);
 ```
 
 #### Set
