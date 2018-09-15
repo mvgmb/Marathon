@@ -16,6 +16,14 @@ typedef pair< int,int > ii;
 std::cout << setprecision(3) << 2.71828; // prints 2.71
 std::cout << setbase(16) << 32; // prints 20
 
+string s = "3";
+int a = std::stoi(s);
+a++;
+cout << a; // a == 4
+
+tolower(string);
+
+getline(cin, string);
 
 //Another note to keep in mind: When a token from the left-hand side of #define appears in the
 //right-hand side, it should be placed in braces to avoid many nontrivial problems.
