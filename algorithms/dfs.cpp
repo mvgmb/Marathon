@@ -5,7 +5,7 @@
 #define vi vector< int >
 #define vii vector< vector< int > >
 #define fr(i, n) for (int i = 0; i < n; i++)
-#define all(v) v.begin(),v.end())
+#define all(v) v.begin(),v.end()
 #define pb push_back
 #define tr(c, it) for (auto it = (c).begin(); it != (c).end(); it++)
 #define rtr(c, it) for (auto it = (c).rbegin(); it != (c).rend(); it++)
