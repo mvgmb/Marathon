@@ -47,8 +47,19 @@ void uniteSet(int a, int b) {
 }
 
 int main() {
-    vector< tuple < int,int,int > > edgeList;
+    int n, m;
+	int u, v, w;
+	vector< tuple < int,int,int > > edgeList;
     sort(all(edgeList));
 
     int mst_cost = 0;
+	init(n);
+	fr(i,n) {
+		tie(w,u,v) = edgeList[i];
+		if (!isSameSet(u,v)) {
+			mst_cost += w;
+			uniteSet(u, v);
+		}
+	}
+
 }

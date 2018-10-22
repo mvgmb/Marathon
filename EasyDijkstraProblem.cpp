@@ -18,7 +18,7 @@
 
 using namespace std;
 
-const int INF = __INT_MAX__;
+const int INF = 0x3f3f3f3f;
 
 int main() {
     ios::sync_with_stdio(0); cin.tie(0);
